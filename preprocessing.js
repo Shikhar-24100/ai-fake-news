@@ -15,7 +15,7 @@ fs.readFile("article.txt", "utf8", (err, text) => {
     const filteredTokens = tokens.filter(word => !stopwordSet.has(word));
 
     // Convert tokens into a CSV column (one word per line)
-    const csvColumn = filteredTokens.join("\n");
+    const csvColumn = ["word", ...filteredTokens].join("\n");
 
     // Write the CSV column to a file
     fs.writeFile("news_data.csv", csvColumn, "utf8", (err) => {
