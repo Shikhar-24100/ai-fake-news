@@ -10,8 +10,19 @@ fs.readFile("article.txt", "utf8", (err, text) => {
     const tokenizer = new natural.WordTokenizer();
     const tokens = tokenizer.tokenize(text.toLowerCase());
 
-    const stopwords = natural.stopwords;
-    const filteredTokens = tokens.filter(word => !stopwords.includes(word));
+    // Convert stopwords to a Set for faster lookup
+    const stopwordSet = new Set(natural.stopwords);
+    const filteredTokens = tokens.filter(word => !stopwordSet.has(word));
 
-    console.log(filteredTokens);
+    // Convert tokens into a CSV column (one word per line)
+    const csvColumn = filteredTokens.join("\n");
+
+    // Write the CSV column to a file
+    fs.writeFile("news_data.csv", csvColumn, "utf8", (err) => {
+        if (err) {
+            console.error("Error writing CSV:", err);
+        } else {
+            console.log("CSV file saved: news_data.csv");
+        }
+    });
 });
