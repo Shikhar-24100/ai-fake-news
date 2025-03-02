@@ -6,7 +6,12 @@ async function scrapeArticle(url) {
     try {
         const { data } = await axios.get(url);
         const $ = cheerio.load(data);
-        const articleText = $("article").text().trim();
+        // const articleText = $("article").text().replace(/\s+/g, ' ').trim();
+        // const articleText = $("article").text().trim();
+        const articleText = $("article p")
+            .map((i, el) => $(el).text().replace(/\s+/g, ' ').trim()) // Removes excess spaces
+            .get()
+            .join("\n");
 
         // Write data to a file
         fs.writeFileSync("article.txt", articleText, "utf8");
