@@ -1,3 +1,10 @@
 node_modules/
 /article.txt
 /news_data.csv
+/.env
+/classified_words.csv
+/news_data.csv
+/news_sentences.csv
+/package-lock.json
+/package.json
+/train.tsv
